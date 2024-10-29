@@ -100,3 +100,15 @@ variable "tags" {
   type = any
   default = []
 }
+
+variable "ordinary_users" {
+  default = {}
+  type = any
+  description = "ordinary_users see `tencentcloud_cdwdoris_user`"
+}
+
+variable "administrators" {
+  default = {}
+  type = any
+  description = "administrators see `tencentcloud_cdwdoris_user`"
+}

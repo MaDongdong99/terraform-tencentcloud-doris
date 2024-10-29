@@ -47,7 +47,6 @@ resource "tencentcloud_cdwdoris_instance" "instance" {
   }
 }
 
-
 resource "tencentcloud_cdwdoris_workload_group" "example" {
   count = var.create_instance && var.workload_group_status == "open" ? 1 : 0
   instance_id = local.instance_id
@@ -62,3 +61,47 @@ resource "tencentcloud_cdwdoris_workload_group" "example" {
     }
   }
 }
+
+#data "tencentcloud_cam_users" "all" {
+#}
+#
+#locals {
+#  user_uins = {
+#    for user in data.tencentcloud_cam_users.all.user_list: user.name => user.uin
+#  }
+#}
+#
+#
+#resource "tencentcloud_cdwdoris_user" "ordinary_users" {
+#  api_type = "AddSystemUser"
+#  user_privilege = 0
+#  dynamic "user_info" {
+#    for_each = var.ordinary_users
+#    content {
+#      instance_id = local.instance_id
+#      password = user_info.value.password
+#      username = user_info.value.username
+#      cam_ranger_group_ids = try(user_info.value.cam_ranger_group_ids, null)
+#      cam_uin = local.user_uins[user_info.value.username]
+#      describe = try(user_info.value.describe, "")
+#      white_host = try(user_info.value.white_host, null)
+#    }
+#  }
+#}
+#
+#resource "tencentcloud_cdwdoris_user" "administrators" {
+#  api_type = "AddSystemUser"
+#  user_privilege = 1
+#  dynamic "user_info" {
+#    for_each = var.administrators
+#    content {
+#      instance_id = local.instance_id
+#      password = user_info.value.password
+#      username = user_info.value.username
+#      cam_ranger_group_ids = try(user_info.value.cam_ranger_group_ids, null)
+#      cam_uin = local.user_uins[user_info.value.username]
+#      describe = try(user_info.value.describe, "")
+#      white_host = try(user_info.value.white_host, null)
+#    }
+#  }
+#}
